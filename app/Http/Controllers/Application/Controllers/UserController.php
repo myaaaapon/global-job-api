@@ -78,11 +78,18 @@ class UserController extends Controller
     public function getUser()
     {
         $user = $this->userUseCase->getUser();
+        $status = $this->userUseCase->getStatusByUserId($user->id);
+        $tags = $this->userUseCase->getUserTagsByUserId($user->id);
 
         return response()->json([
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
+            'status' => [
+                'id' => $status->id,
+                'name' => $status->name,
+            ],
+            'tag' => $tags,
         ], Response::HTTP_OK);
     }
 

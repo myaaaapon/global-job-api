@@ -3,10 +3,12 @@
 namespace App\Application\UseCases;
 
 use App\Application\Contracts\UserUseCaseInterface;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Domain\Entities\User as UserEntity;
+use App\Models\User;
+use App\Models\Domain\Entities\UserStatus;
 
 class UserUseCase implements UserUseCaseInterface
 {
@@ -65,6 +67,7 @@ class UserUseCase implements UserUseCaseInterface
         return User::create([
             'name' => $name,
             'email' => $email,
+            'status_id' => UserStatus::FREE_USER,
             'password' => Hash::make($password),
         ]);
     }
@@ -130,5 +133,44 @@ class UserUseCase implements UserUseCaseInterface
         }
 
         $user->delete();
+    }
+
+    /**
+     * ユーザーのステータスを取得します。
+     *
+     * @param int $userId ユーザーID
+     * @return UserStatus|null ユーザーのステータスが見つかった場合はUserStatusのインスタンスを返します。見つからない場合はnullを返します。
+     */
+    public function getStatusByUserId(int $userId): ?UserStatus
+    {
+        try {
+            $user = UserEntity::findOrFail($userId);
+            return $user->status;
+        } catch (ModelNotFoundException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * ユーザーに紐づくタグを取得します。
+     *
+     * @param int $userId ユーザーID
+     * @return array|null ユーザーに紐づくタグの配列を返します。紐づくタグがない場合はnullを返します。
+     */
+    public function getUserTagsByUserId(int $userId): ?array
+    {
+        try {
+            $user = UserEntity::findOrFail($userId);
+            $usertags = $user->usertags->map(function ($usertag) {
+                return [
+                    'id' => $usertag->tag->id,
+                    'name' => $usertag->tag->name,
+                ];
+            })->toArray();
+
+            return $usertags;
+        } catch (ModelNotFoundException $e) {
+            return null;
+        }
     }
 }
