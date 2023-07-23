@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Schema;
 class CreateUserTagsTable extends Migration
 {
     /**
-     * Run the migrations.
+     * マイグレーションを実行します。
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('user_tags', function (Blueprint $table) {
             $table->id();
@@ -25,11 +25,11 @@ class CreateUserTagsTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * マイグレーションをロールバックします。
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('user_tags');
     }

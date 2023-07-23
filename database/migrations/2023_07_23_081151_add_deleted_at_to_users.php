@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Schema;
 class AddDeletedAtToUsers extends Migration
 {
     /**
-     * Run the migrations.
+     * マイグレーションを実行します。
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
             $table->softDeletes();
@@ -19,11 +19,11 @@ class AddDeletedAtToUsers extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * マイグレーションをロールバックします。
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropSoftDeletes();

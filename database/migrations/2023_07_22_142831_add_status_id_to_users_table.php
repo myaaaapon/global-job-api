@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Schema;
 class AddStatusIdToUsersTable extends Migration
 {
     /**
-     * Run the migrations.
+     * マイグレーションを実行します。
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('status_id')->default(1);
@@ -20,11 +20,11 @@ class AddStatusIdToUsersTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * マイグレーションをロールバックします。
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['status_id']);
