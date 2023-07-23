@@ -28,9 +28,9 @@ class UserController extends Controller
      * ユーザーをログインさせる。
      *
      * @param  \App\Http\Requests\LoginRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse JSONレスポンス
      */
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
         $token = $this->userUseCase->login($request->email, $request->password);
         if ($token) {
@@ -42,21 +42,21 @@ class UserController extends Controller
     /**
      * ユーザーをログアウトする。
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse JSONレスポンス
      */
-    public function logout()
+    public function logout(): JsonResponse
     {
         $this->userUseCase->logout();
-        return response()->json('User logged out', Response::HTTP_OK);
+        return response()->json(['message' => 'Logout successfully'], Response::HTTP_OK);
     }
 
     /**
      * ユーザーを作成する。
      *
      * @param  CreateUserRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse JSONレスポンス
      */
-    public function createUser(CreateUserRequest $request)
+    public function createUser(CreateUserRequest $request): JsonResponse
     {
         $tagIds = $request->input('tag', []);
         $tagIds = array_map(fn ($tag) => $tag['id'], $tagIds);
@@ -73,9 +73,9 @@ class UserController extends Controller
     /**
      * ユーザー情報を取得する。
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse JSONレスポンス
      */
-    public function getUser()
+    public function getUser(): JsonResponse
     {
         $user = $this->userUseCase->getUser();
         $status = $this->userUseCase->getStatusByUserId($user->id);
@@ -98,9 +98,9 @@ class UserController extends Controller
      * ユーザー情報を更新する。
      *
      * @param  UpdateUserRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse JSONレスポンス
      */
-    public function updateUser(UpdateUserRequest $request)
+    public function updateUser(UpdateUserRequest $request): JsonResponse
     {
         $tagIds = $request->input('tag', []);
         $tagIds = array_map(fn ($tag) => $tag['id'], $tagIds);
@@ -123,6 +123,6 @@ class UserController extends Controller
     public function deleteUser(): JsonResponse
     {
         $this->userUseCase->deleteUser();
-        return response()->json('Delete successfully', \Illuminate\Http\Response::HTTP_OK);
+        return response()->json(['message' => 'Delete successfully'], Response::HTTP_OK);
     }
 }
