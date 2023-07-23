@@ -44,14 +44,13 @@ interface UserUseCaseInterface
 
     /**
      * ユーザー情報を更新します。
-     *
-     * @param string $name - 更新後のユーザーの名前
-     * @param string $email - 更新後のユーザーのメールアドレス
-     * @param string $password - 更新後のユーザーのパスワード
-     * @return User 更新後のユーザーのインスタンス
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException ユーザーが見つからない場合は例外をスローします
+
+     * @param string $name - ユーザーの名前
+     * @param string $email - ユーザーのメールアドレス
+     * @param string $password - ユーザーのパスワード
+     * @param int[] $tagIds - タグのID配列
      */
-    public function updateUser(string $name, string $email, string $password): User;
+    public function updateUser(string $name, string $email, string $password, array $tagIds): void;
 
     /**
      * ユーザーを削除します。

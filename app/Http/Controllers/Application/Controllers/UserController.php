@@ -66,7 +66,7 @@ class UserController extends Controller
             $request->password,
             $tagIds
         );
-        return response()->json(['message' => 'Update successfully'], Response::HTTP_OK);
+        return response()->json(['message' => 'Create successfully'], Response::HTTP_OK);
     }
 
     /**
@@ -96,22 +96,21 @@ class UserController extends Controller
     /**
      * ユーザー情報を更新する。
      *
-     * @param  UpdateUserRequest  $request
+     * @param  UpdateUserRequest $request
      * @return \Illuminate\Http\Response
      */
     public function updateUser(UpdateUserRequest $request)
     {
-        $user = $this->userUseCase->updateUser(
+        $tagIds = $request->input('tag', []);
+        $tagIds = array_map(fn ($tag) => $tag['id'], $tagIds);
+
+        $this->userUseCase->updateUser(
             $request->name,
             $request->email,
-            $request->password
+            $request->password,
+            $tagIds
         );
-
-        return response()->json([
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-        ], Response::HTTP_OK);
+        return response()->json(['message' => 'Update successfully'], Response::HTTP_OK);
     }
 
     /**

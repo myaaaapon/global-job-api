@@ -104,26 +104,29 @@ class UserUseCase implements UserUseCaseInterface
      * @param string $name ユーザーの名前
      * @param string $email ユーザーのメールアドレス
      * @param string $password ユーザーのパスワード
-     * @return User 更新後のユーザーのインスタンス
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException ユーザーが見つからない場合は例外をスローします
+     * @param array $tagIds タグのID配列
+     * @return void
      */
-    public function updateUser(string $name, string $email, string $password): User
+    public function updateUser(string $name, string $email, string $password, array $tagIds): void
     {
-        $userId = auth()->id();
+        $userId = Auth::id();
+        $user = UserEntity::findOrFail($userId);
 
-        try {
-            $user = User::findOrFail($userId);
-        } catch (ModelNotFoundException $e) {
-            throw new \Exception('User not found', 404);
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = Hash::make($password);
+        $user->save();
+
+        $userTagIds = UserTag::where('user_id', $userId)->pluck('tag_id')->toArray();
+        $tagsToAttach = array_diff($tagIds, $userTagIds);
+        $tagsToDetach = array_diff($userTagIds, $tagIds);
+        foreach ($tagsToAttach as $tagId) {
+            UserTag::create([
+                'user_id' => $userId,
+                'tag_id' => $tagId,
+            ]);
         }
-
-        $user->update([
-            'name' => $name,
-            'email' => $email,
-            'password' => Hash::make($password),
-        ]);
-
-        return $user;
+        UserTag::where('user_id', $userId)->whereIn('tag_id', $tagsToDetach)->delete();
     }
 
     /**
