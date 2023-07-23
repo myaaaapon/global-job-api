@@ -10,11 +10,11 @@ use Illuminate\Http\Response;
 class LoginRequest extends FormRequest
 {
     /**
-     * ユーザーがこのリクエストを行うことを許可するかどうかを判断します。
+     * リクエストを行うことを許可するかどうかを判断します。
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true; // 特定の認可ロジックがないため、常に true に設定します。
     }
@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'email' => ['required', 'email'],
@@ -40,7 +40,7 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator): void
     {
         throw new ValidationException($validator, response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY));
     }

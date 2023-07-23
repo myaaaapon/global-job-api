@@ -3,19 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\UserStatus;
+use App\Models\Domain\Entities\UserStatus;
 
 class UserStatusesTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * データベースシーディングを実行します。
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        UserStatus::create(['name' => '管理者']);
-        UserStatus::create(['name' => '無料ユーザー']);
-        UserStatus::create(['name' => '有料ユーザー']);
+        UserStatus::insert([
+            ['name' => '管理者'],
+            ['name' => '無料ユーザー'],
+            ['name' => '有料ユーザー'],
+        ]);
     }
 }

@@ -3,18 +3,30 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Tag;
+use App\Models\Domain\Entities\Tag;
 
 class TagSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * データベースシードを実行します。
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        Tag::create(['name' => 'Nuxt.js']);
-        Tag::create(['name' => 'js']);
+        $tags = [
+            ['name' => 'Nuxt.js'],
+            ['name' => 'js'],
+            ['name' => 'Go'],
+            ['name' => 'React'],
+            ['name' => 'Python'],
+            ['name' => 'Java'],
+            ['name' => 'PHP'],
+            ['name' => 'Ruby'],
+            ['name' => 'C#'],
+            ['name' => 'Swift'],
+        ];
+
+        Tag::insert($tags);
     }
 }

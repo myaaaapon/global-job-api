@@ -3,37 +3,40 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\Domain\Entities\User;
+use App\Models\Domain\Entities\UserStatus;
 use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * データベースシーディングを実行します。
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        User::create([
-            'name' => 'John Doe',
-            'email' => 'john@example.com',
-            'password' => Hash::make('password'),
-            'status_id' => 1, // 1に対応するuser_statusesのIDを設定
-        ]);
+        $users = [
+            [
+                'name' => '山田 太郎',
+                'email' => 'taro@example.com',
+                'password' => Hash::make('password'),
+                'status_id' => UserStatus::FREE_USER,
+            ],
+            [
+                'name' => '佐藤 花子',
+                'email' => 'hanako@example.com',
+                'password' => Hash::make('password'),
+                'status_id' => UserStatus::PAID_USER,
+            ],
+            [
+                'name' => '鈴木 次郎',
+                'email' => 'jiro@example.com',
+                'password' => Hash::make('password'),
+                'status_id' => UserStatus::FREE_USER,
+            ],
+        ];
 
-        User::create([
-            'name' => 'Jane Smith',
-            'email' => 'jane@example.com',
-            'password' => Hash::make('password'),
-            'status_id' => 2, // 2に対応するuser_statusesのIDを設定
-        ]);
-
-        User::create([
-            'name' => 'Bob Johnson',
-            'email' => 'bob@example.com',
-            'password' => Hash::make('password'),
-            'status_id' => 1, // 1に対応するuser_statusesのIDを設定
-        ]);
+        User::insert($users);
     }
 }

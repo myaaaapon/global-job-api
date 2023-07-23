@@ -102,6 +102,7 @@ class UserController extends Controller
      */
     public function updateUser(UpdateUserRequest $request): JsonResponse
     {
+        $request->user()->id;
         $tagIds = $request->input('tag', []);
         $tagIds = array_map(fn ($tag) => $tag['id'], $tagIds);
 

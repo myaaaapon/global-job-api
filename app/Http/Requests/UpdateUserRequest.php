@@ -3,31 +3,34 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Domain\Entities\UserStatus;
 
 class UpdateUserRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * ユーザーがこのリクエストを行うことを許可するかどうかを判断します。
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * リクエストに適用されるバリデーションルールを取得します。
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
+        $userId = $this->user()->id;
+
         return [
-            'name' => ['required'],
-            'email' => ['required', 'email'],
+            'name' => ['required', 'unique:users,name,' . $userId],
+            'email' => ['required', 'email', 'unique:users,email,' . $userId],
             'password' => ['required'],
-            'status_id' => ['required', 'integer'],
+            'status_id' => ['required', 'integer', 'in:' . implode(',', UserStatus::getStatusIds())],
             'tag' => ['array'],
             'tag.*.id' => ['required', 'integer'],
         ];

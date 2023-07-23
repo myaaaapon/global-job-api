@@ -38,7 +38,7 @@ class UserUseCase implements UserUseCaseInterface
      * @return void
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException ユーザーが見つからない場合は例外をスローします
      */
-    public function logout()
+    public function logout(): void
     {
         $userId = auth()->id();
 
@@ -66,7 +66,7 @@ class UserUseCase implements UserUseCaseInterface
      */
     public function createUser(string $name, string $email, string $password, array $tagIds): void
     {
-        $user = User::create([
+        $user = UserEntity::create([
             'name' => $name,
             'email' => $email,
             'status_id' => UserStatus::FREE_USER,
@@ -135,7 +135,7 @@ class UserUseCase implements UserUseCaseInterface
      * @return void
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException ユーザーが見つからない場合は例外をスローします
      */
-    public function deleteUser()
+    public function deleteUser(): void
     {
         $userId = auth()->id();
 

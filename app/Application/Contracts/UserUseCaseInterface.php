@@ -12,7 +12,7 @@ interface UserUseCaseInterface
      *
      * @param string $email - ユーザーのメールアドレス
      * @param string $password - ユーザーのパスワード
-     * @return ?string ログインに成功した場合はトークンを返します。失敗した場合はnullを返します。
+     * @return string|null ログインに成功した場合はトークンを返します。失敗した場合はnullを返します。
      */
     public function login(string $email, string $password): ?string;
 
@@ -22,7 +22,7 @@ interface UserUseCaseInterface
      * @return void
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException ユーザーが見つからない場合は例外をスローします
      */
-    public function logout();
+    public function logout(): void;
 
     /**
      * ユーザーを作成します。
@@ -31,6 +31,7 @@ interface UserUseCaseInterface
      * @param string $email - ユーザーのメールアドレス
      * @param string $password - ユーザーのパスワード
      * @param int[] $tagIds - タグのID配列
+     * @return void
      */
     public function createUser(string $name, string $email, string $password, array $tagIds): void;
 
@@ -44,11 +45,12 @@ interface UserUseCaseInterface
 
     /**
      * ユーザー情報を更新します。
-
+     *
      * @param string $name - ユーザーの名前
      * @param string $email - ユーザーのメールアドレス
      * @param string $password - ユーザーのパスワード
      * @param int[] $tagIds - タグのID配列
+     * @return void
      */
     public function updateUser(string $name, string $email, string $password, array $tagIds): void;
 
@@ -58,7 +60,7 @@ interface UserUseCaseInterface
      * @return void
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException ユーザーが見つからない場合は例外をスローします
      */
-    public function deleteUser();
+    public function deleteUser(): void;
 
     /**
      * ユーザーのステータスを取得します。
