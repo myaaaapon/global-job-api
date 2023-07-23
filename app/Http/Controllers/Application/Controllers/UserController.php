@@ -8,6 +8,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Application\Contracts\UserUseCaseInterface as UserUseCase;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -116,13 +117,12 @@ class UserController extends Controller
     /**
      * ユーザーを削除する。
      *
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @return \Illuminate\Http\JsonResponse JSONレスポンス
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException モデルが見つからなかった場合の例外
      */
-    public function deleteUser()
+    public function deleteUser(): JsonResponse
     {
         $this->userUseCase->deleteUser();
-        return response()->json('User deleted', Response::HTTP_OK);
+        return response()->json('Delete successfully', \Illuminate\Http\Response::HTTP_OK);
     }
 }

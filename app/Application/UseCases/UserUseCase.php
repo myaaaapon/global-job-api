@@ -140,11 +140,12 @@ class UserUseCase implements UserUseCaseInterface
         $userId = auth()->id();
 
         try {
-            $user = User::findOrFail($userId);
+            $user = UserEntity::findOrFail($userId);
         } catch (ModelNotFoundException $e) {
             throw new \Exception('User not found', 404);
         }
 
+        $user->userTags()->delete();
         $user->delete();
     }
 
