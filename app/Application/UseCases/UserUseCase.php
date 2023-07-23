@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Domain\Entities\User as UserEntity;
 use App\Models\User;
 use App\Models\Domain\Entities\UserStatus;
+use App\Models\Domain\Entities\UserTag;
 
 class UserUseCase implements UserUseCaseInterface
 {
@@ -60,16 +61,25 @@ class UserUseCase implements UserUseCaseInterface
      * @param string $name ユーザーの名前
      * @param string $email ユーザーのメールアドレス
      * @param string $password ユーザーのパスワード
-     * @return User 作成されたユーザーのインスタンス
+     * @param int[] $tagIds タグのID配列
+     * @return void
      */
-    public function createUser(string $name, string $email, string $password): User
+    public function createUser(string $name, string $email, string $password, array $tagIds): void
     {
-        return User::create([
+        $user = User::create([
             'name' => $name,
             'email' => $email,
             'status_id' => UserStatus::FREE_USER,
             'password' => Hash::make($password),
         ]);
+
+        foreach ($tagIds as $tagId) {
+            $userTag = new UserTag([
+                'user_id' => $user->id,
+                'tag_id' => $tagId,
+            ]);
+            $userTag->save();
+        }
     }
 
     /**

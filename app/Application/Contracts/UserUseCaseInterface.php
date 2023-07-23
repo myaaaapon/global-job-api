@@ -30,9 +30,9 @@ interface UserUseCaseInterface
      * @param string $name - ユーザーの名前
      * @param string $email - ユーザーのメールアドレス
      * @param string $password - ユーザーのパスワード
-     * @return User 作成されたユーザーのインスタンス
+     * @param int[] $tagIds - タグのID配列
      */
-    public function createUser(string $name, string $email, string $password): User;
+    public function createUser(string $name, string $email, string $password, array $tagIds): void;
 
     /**
      * ユーザー情報を取得します。

@@ -20,5 +20,8 @@ class User extends Model
     {
         return $this->hasMany(UserTag::class);
     }
-
+    public function tags()
+    {
+        return $this->hasManyThrough(Tag::class, UserTag::class, 'user_id', 'id', 'id', 'tag_id');
+    }
 }

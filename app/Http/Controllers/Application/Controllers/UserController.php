@@ -57,17 +57,16 @@ class UserController extends Controller
      */
     public function createUser(CreateUserRequest $request)
     {
-        $user = $this->userUseCase->createUser(
+        $tagIds = $request->input('tag', []);
+        $tagIds = array_map(fn ($tag) => $tag['id'], $tagIds);
+
+        $this->userUseCase->createUser(
             $request->name,
             $request->email,
-            $request->password
+            $request->password,
+            $tagIds
         );
-
-        return response()->json([
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-        ], Response::HTTP_OK);
+        return response()->json(['message' => 'Update successfully'], Response::HTTP_OK);
     }
 
     /**
@@ -90,6 +89,7 @@ class UserController extends Controller
                 'name' => $status->name,
             ],
             'tag' => $tags,
+            'match' => [],  // TODO: マッチングしたJOBを返す
         ], Response::HTTP_OK);
     }
 
