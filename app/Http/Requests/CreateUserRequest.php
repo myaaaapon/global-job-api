@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Domain\Entities\UserStatus;
+use Illuminate\Validation\Rule;
 
 class CreateUserRequest extends FormRequest
 {
@@ -30,7 +31,7 @@ class CreateUserRequest extends FormRequest
             'password' => ['required'],
             'status_id' => ['required', 'integer', 'in:' . implode(',', UserStatus::getStatusIds())],
             'tag' => ['array'],
-            'tag.*.id' => ['required', 'integer'],
+            'tag.*.id' => ['integer', Rule::exists('tags', 'id'), 'distinct'],
         ];
     }
 }
