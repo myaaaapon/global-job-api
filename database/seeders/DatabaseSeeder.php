@@ -17,5 +17,16 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(TagSeeder::class);
         $this->call(UserTagSeeder::class);
+        $this->call(SiteSeeder::class);
+        $this->call(LanguageSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(ContractTypeSeeder::class);
+        $this->call(RemoteSeeder::class);
+        $this->call(CountrySeeder::class);
+        $this->call(CompanySeeder::class);
+        $this->call(JobSeeder::class);
+        $this->call(HtmlTagSeeder::class);
+        $this->call(ItemSeeder::class);
+        $this->call(ItemTagSeeder::class);
     }
 }
