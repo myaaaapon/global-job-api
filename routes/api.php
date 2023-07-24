@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Application\Controllers\UserController;
+
+// use App\Http\Controllers\Application\Controllers\JobController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// ユーザー登録とログイン
+Route::post('/user', [UserController::class, 'createUser']);
+Route::post('/user/login', [UserController::class, 'login']);
+
+// 認証が必要なルート
+Route::middleware('auth:sanctum')->group(function () {
+
+    // ユーザー関連のエンドポイント
+    Route::get('/user', [UserController::class, 'getUser']);
+    Route::put('/user', [UserController::class, 'updateUser']);
+    Route::delete('/user', [UserController::class, 'deleteUser']);
+    Route::post('/user/logout', [UserController::class, 'logout']);
+
+    // ジョブ関連のエンドポイント
+    // Route::get('/job', [JobController::class, 'getAllJobs']);
+    // Route::get('/job/{id}', [JobController::class, 'getJobById']);
 });

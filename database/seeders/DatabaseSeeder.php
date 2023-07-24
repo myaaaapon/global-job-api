@@ -7,12 +7,15 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * アプリケーションのデータベースにシードを挿入します。
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call(UserStatusesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(TagSeeder::class);
+        $this->call(UserTagSeeder::class);
     }
 }
