@@ -7,25 +7,25 @@ use Illuminate\Support\Facades\Schema;
 class CreateContractTypesTable extends Migration
 {
     /**
-     * Run the migrations.
+     * マイグレーションを実行します。
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('contract_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->comment('契約タイプ名');
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * マイグレーションをロールバックします。
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('contract_types');
     }

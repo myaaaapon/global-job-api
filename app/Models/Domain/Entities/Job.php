@@ -3,7 +3,22 @@
 namespace App\Models\Domain\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * 求人情報のEloquentモデル
+ *
+ * @property int $id 求人情報ID
+ * @property int $site_id サイトID
+ * @property string $url URL
+ * @property string $content コンテンツ
+ * @property \Carbon\Carbon|null $created_at 作成日時
+ * @property \Carbon\Carbon|null $updated_at 更新日時
+ *
+ * @property-read BelongsTo|Site $site SiteへのBelongsToリレーション
+ * @property-read HasOne|HtmlTag $htmlTag HtmlTagへのHasOneリレーション
+ */
 class Job extends Model
 {
     /**
@@ -18,75 +33,57 @@ class Job extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'body', 'company_id', 'price', 'category_id', 'contract_type_id', 'remote_id', 'published_at', 'image_url', 'score', 'language_id', 'site_id'];
+    protected $fillable = ['site_id', 'url', 'content'];
 
     /**
-     * Companyへのリレーション
+     * ページネーションの1ページあたりの件数を定義
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @var int
      */
-    public function company()
+    public const PAGINATION_LIMIT_10 = 10;
+    public const PAGINATION_LIMIT_30 = 30;
+
+    /**
+     * 関連アイテムの表示件数を定義
+     *
+     * @var int
+     */
+    public const RELATE_DISPLAY_LIMIT = 4;
+
+    /**
+     * Siteへのリレーション
+     *
+     * @return BelongsTo
+     * SiteへのBelongsToリレーションを返します。
+     */
+    public function site(): BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Site::class);
     }
 
     /**
      * HtmlTagへのリレーション
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return HasOne
+     * HtmlTagへのHasOneリレーションを返します。
      */
-    public function htmlTag()
+    public function htmlTag(): HasOne
     {
-        return $this->belongsTo(HtmlTag::class);
+        return $this->hasOne(HtmlTag::class, 'job_id');
     }
 
     /**
-     * Categoryへのリレーション
+     * ページネーションのパターンを配列で返します。
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return array
+     * ページネーションのパターンを連想配列として返します。
+     * キーには定数値、値には表示する件数を指定します。
      */
-    public function category()
+    public static function getPaginationPatterns(): array
     {
-        return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * ContractTypeへのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function contractType()
-    {
-        return $this->belongsTo(ContractType::class);
-    }
-
-    /**
-     * Remoteへのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function remote()
-    {
-        return $this->belongsTo(Remote::class);
-    }
-
-    /**
-     * Languageへのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function language()
-    {
-        return $this->belongsTo(Language::class);
-    }
-
-    /**
-     * Siteへのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function site()
-    {
-        return $this->belongsTo(Site::class);
+        return [
+            self::PAGINATION_LIMIT_10 => 10,
+            self::PAGINATION_LIMIT_30 => 30,
+        ];
     }
 }

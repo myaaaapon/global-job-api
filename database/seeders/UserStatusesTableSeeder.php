@@ -8,7 +8,7 @@ use App\Models\Domain\Entities\UserStatus;
 class UserStatusesTableSeeder extends Seeder
 {
     /**
-     * データベースシーディングを実行します。
+     * データベースのシーダーを実行します。
      *
      * @return void
      */

@@ -8,20 +8,32 @@ use App\Models\Domain\Entities\Site;
 class SiteSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * データベースのシーダーを実行します。
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $sites = [
             [
-                'name' => 'Upwork',
-                'home_url' => 'https://www.upwork.com/',
+                'name' => 'TechJobs',
+                'home_url' => 'https://www.techjobs.com/',
             ],
             [
-                'name' => 'Freelancer',
-                'home_url' => 'https://www.freelancer.com/',
+                'name' => 'JobHub',
+                'home_url' => 'https://www.jobhub.com/',
+            ],
+            [
+                'name' => 'CareerConnect',
+                'home_url' => 'https://www.careerconnect.com/',
+            ],
+            [
+                'name' => 'GlobalHire',
+                'home_url' => 'https://www.globalhire.com/',
+            ],
+            [
+                'name' => 'TopTalent',
+                'home_url' => 'https://www.toptalent.com/',
             ],
         ];
 

@@ -7,25 +7,25 @@ use Illuminate\Support\Facades\Schema;
 class CreateItemsTable extends Migration
 {
     /**
-     * Run the migrations.
+     * マイグレーションを実行します。
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('html_tag_id');
-            $table->string('title');
-            $table->text('body');
-            $table->unsignedBigInteger('company_id');
-            $table->string('price');
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('contract_type_id');
-            $table->unsignedBigInteger('remote_id');
-            $table->date('published_at')->nullable();
-            $table->string('image_url')->nullable();
-            $table->float('score')->nullable();
+            $table->unsignedBigInteger('html_tag_id')->comment('HTMLタグID');
+            $table->string('title')->comment('タイトル');
+            $table->text('body')->comment('本文');
+            $table->unsignedBigInteger('company_id')->comment('会社ID');
+            $table->string('price')->comment('価格');
+            $table->unsignedBigInteger('category_id')->comment('カテゴリID');
+            $table->unsignedBigInteger('contract_type_id')->comment('契約タイプID');
+            $table->unsignedBigInteger('remote_id')->comment('リモートID');
+            $table->date('published_at')->nullable()->comment('公開日');
+            $table->string('image_url')->nullable()->comment('画像URL');
+            $table->float('score')->nullable()->comment('スコア');
             $table->timestamps();
 
             $table->foreign('html_tag_id')->references('id')->on('html_tags');
@@ -37,11 +37,11 @@ class CreateItemsTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * マイグレーションをロールバックします。
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('items');
     }

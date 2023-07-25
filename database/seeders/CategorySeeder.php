@@ -8,11 +8,11 @@ use App\Models\Domain\Entities\Category;
 class CategorySeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * データベースのシーダーを実行します。
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $categories = [
             'フロントエンドエンジニア',

@@ -10,23 +10,26 @@ use App\Models\Domain\Entities\Language;
 class HtmlTagSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * データベースのシーダーを実行します。
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $jobs = Job::all();
+        $jobs = Job::inRandomOrder()->take(20)->get();
         $languages = Language::all();
+        $htmlTagsData = [];
 
         foreach ($jobs as $job) {
-            HtmlTag::create([
+            $language = $languages->random();
+            $htmlTagsData[] = [
                 'job_id' => $job->id,
-                'title' => "{$job->title} HTML Tag",
+                'title' => "{$job->title} Explore Career",
                 'body' => "<html><body><h1>{$job->title}</h1><p>{$job->content}</p></body></html>",
-                'language_id' => $languages->random()->id,
-            ]);
+                'language_id' => $language->id,
+            ];
         }
 
+        HtmlTag::insert($htmlTagsData);
     }
 }

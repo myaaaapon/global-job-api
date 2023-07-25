@@ -7,17 +7,17 @@ use Illuminate\Support\Facades\Schema;
 class CreateJobsTable extends Migration
 {
     /**
-     * Run the migrations.
+     * マイグレーションを実行します。
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('site_id');
-            $table->string('url');
-            $table->text('content');
+            $table->unsignedBigInteger('site_id')->comment('サイトID');
+            $table->string('url')->comment('URL');
+            $table->text('content')->comment('コンテンツ');
             $table->timestamps();
 
             $table->foreign('site_id')->references('id')->on('sites')->onDelete('cascade');
@@ -25,11 +25,11 @@ class CreateJobsTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * マイグレーションをロールバックします。
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('jobs');
     }

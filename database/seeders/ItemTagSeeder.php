@@ -4,24 +4,24 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Domain\Entities\Item;
-use App\Models\Domain\Entities\HtmlTag;
+use App\Models\Domain\Entities\Tag;
 use App\Models\Domain\Entities\ItemTag;
 
 class ItemTagSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * データベースのシーダーを実行します。
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $items = Item::all();
-        $htmlTags = HtmlTag::all();
+        $tags = Tag::all();
 
         $itemTags = [];
         foreach ($items as $item) {
-            $randomTags = $htmlTags->random(2);
+            $randomTags = $tags->random(2);
             foreach ($randomTags as $tag) {
                 $itemTags[] = [
                     'item_id' => $item->id,

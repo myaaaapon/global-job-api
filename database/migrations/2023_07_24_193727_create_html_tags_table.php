@@ -7,18 +7,18 @@ use Illuminate\Support\Facades\Schema;
 class CreateHtmlTagsTable extends Migration
 {
     /**
-     * Run the migrations.
+     * マイグレーションを実行します。
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('html_tags', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('job_id');
-            $table->string('title');
-            $table->text('body');
-            $table->unsignedBigInteger('language_id');
+            $table->unsignedBigInteger('job_id')->comment('求人情報ID');
+            $table->string('title')->comment('タイトル');
+            $table->text('body')->comment('本文');
+            $table->unsignedBigInteger('language_id')->comment('言語ID');
             $table->timestamps();
 
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
@@ -27,11 +27,11 @@ class CreateHtmlTagsTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * マイグレーションをロールバックします。
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('html_tags');
     }

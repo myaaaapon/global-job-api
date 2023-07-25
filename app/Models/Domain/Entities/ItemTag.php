@@ -3,6 +3,7 @@
 namespace App\Models\Domain\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ItemTag extends Model
 {
@@ -23,9 +24,10 @@ class ItemTag extends Model
     /**
      * Itemへのリレーション
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
+     * ItemへのBelongsToリレーションを返します。
      */
-    public function item()
+    public function item(): BelongsTo
     {
         return $this->belongsTo(Item::class);
     }
@@ -33,9 +35,10 @@ class ItemTag extends Model
     /**
      * Tagへのリレーション
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
+     * TagへのBelongsToリレーションを返します。
      */
-    public function tag()
+    public function tag(): BelongsTo
     {
         return $this->belongsTo(Tag::class);
     }

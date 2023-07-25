@@ -8,11 +8,11 @@ use App\Models\Domain\Entities\Country;
 class CountrySeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * データベースのシーダーを実行します。
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $countries = [
             '日本',

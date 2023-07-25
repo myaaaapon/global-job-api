@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class UsersTableSeeder extends Seeder
 {
     /**
-     * データベースシーディングを実行します。
+     * データベースのシーダーを実行します。
      *
      * @return void
      */

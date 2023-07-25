@@ -7,26 +7,26 @@ use Illuminate\Support\Facades\Schema;
 class CreateSitesTable extends Migration
 {
     /**
-     * Run the migrations.
+     * マイグレーションを実行します。
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('home_url');
+            $table->string('name')->comment('サイト名');
+            $table->string('home_url')->comment('ホームURL');
             $table->timestamps();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * マイグレーションをロールバックします。
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('sites');
     }

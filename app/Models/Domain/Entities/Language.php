@@ -3,6 +3,7 @@
 namespace App\Models\Domain\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Language extends Model
 {
@@ -19,4 +20,15 @@ class Language extends Model
      * @var array
      */
     protected $fillable = ['name'];
+
+    /**
+     * HtmlTagへのリレーション
+     *
+     * @return HasMany
+     * HtmlTagへのHasManyリレーションを返します。
+     */
+    public function htmlTags(): HasMany
+    {
+        return $this->hasMany(HtmlTag::class, 'language_id', 'id');
+    }
 }
