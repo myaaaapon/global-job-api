@@ -30,11 +30,11 @@ class JobController extends Controller
     public function getAllJobsBySearch(GetJobRequest $request): JsonResponse
     {
         $jobs = $this->jobUseCase->getAllJobsBySearch(
-            $request->input('category_id'),
-            $request->input('country_id'),
-            $request->input('remote_id'),
+            $request->category_id,
+            $request->country_id,
+            $request->remote_id,
             $request->input('tag.*.id'),
-            $request->input('limit')
+            $request->limit
         );
         return response()->json($jobs);
     }
