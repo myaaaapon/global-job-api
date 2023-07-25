@@ -7,6 +7,8 @@ use Laravel\Sanctum\Sanctum;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Application\Contracts\UserUseCaseInterface;
 use App\Application\UseCases\UserUseCase;
+use App\Application\Contracts\JobUseCaseInterface;
+use App\Application\UseCases\JobUseCase;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(UserUseCaseInterface::class, UserUseCase::class);
+        $this->app->bind(JobUseCaseInterface::class, JobUseCase::class);
     }
 
     /**

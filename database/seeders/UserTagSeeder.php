@@ -10,7 +10,7 @@ use App\Models\Domain\Entities\UserTag;
 class UserTagSeeder extends Seeder
 {
     /**
-     * データベースシーディングを実行します。
+     * データベースのシーダーを実行します。
      *
      * @return void
      */

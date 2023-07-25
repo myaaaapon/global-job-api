@@ -8,7 +8,7 @@ use App\Models\Domain\Entities\Tag;
 class TagSeeder extends Seeder
 {
     /**
-     * データベースシードを実行します。
+     * データベースのシーダーを実行します。
      *
      * @return void
      */
