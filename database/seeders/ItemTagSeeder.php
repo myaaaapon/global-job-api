@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\Item;
-use App\Models\Domain\Entities\Tag;
-use App\Models\Domain\Entities\ItemTag;
+use App\Domain\Entities\Item;
+use App\Domain\Entities\Tag;
+use App\Domain\Entities\ItemTag;
 
 class ItemTagSeeder extends Seeder
 {

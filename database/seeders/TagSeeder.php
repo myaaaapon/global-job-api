@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\Tag;
+use App\Domain\Entities\Tag;
 
 class TagSeeder extends Seeder
 {

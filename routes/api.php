@@ -22,7 +22,7 @@ Route::post('/user/login', [UserController::class, 'login']);
 // 認証が必要なルート
 Route::middleware('auth:sanctum')->group(function () {
     // ユーザー関連のエンドポイント
-    Route::get('/user', [UserController::class, 'getUser']);
+    Route::get('/user', [UserController::class, 'getUserWithMatchingItems']);
     Route::put('/user', [UserController::class, 'updateUser']);
     Route::delete('/user', [UserController::class, 'deleteUser']);
     Route::post('/user/logout', [UserController::class, 'logout']);

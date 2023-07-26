@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\HtmlTag;
-use App\Models\Domain\Entities\Job;
-use App\Models\Domain\Entities\Language;
+use App\Domain\Entities\HtmlTag;
+use App\Domain\Entities\Job;
+use App\Domain\Entities\Language;
 
 class HtmlTagSeeder extends Seeder
 {

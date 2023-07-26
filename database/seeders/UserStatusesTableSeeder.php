@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\UserStatus;
+use App\Domain\Entities\UserStatus;
 
 class UserStatusesTableSeeder extends Seeder
 {

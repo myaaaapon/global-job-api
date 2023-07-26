@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\Remote;
+use App\Domain\Entities\Remote;
 
 class RemoteSeeder extends Seeder
 {

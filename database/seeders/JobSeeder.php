@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\Job;
-use App\Models\Domain\Entities\Site;
+use App\Domain\Entities\Job;
+use App\Domain\Entities\Site;
 
 class JobSeeder extends Seeder
 {

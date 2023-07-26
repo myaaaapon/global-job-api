@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Models\Domain\Entities;
+namespace App\Domain\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * ユーザーのEloquentモデル
@@ -26,9 +28,30 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read Collection|UserTag[] $userTags ユーザータグのコレクション
  * @property-read Collection|Tag[] $tags ユーザーに関連するタグのコレクション
  */
-class User extends Model
+class User extends Authenticatable
 {
+    use HasApiTokens;
+    use Notifiable;
     use SoftDeletes;
+
+    /**
+     * シリアライズ時に非表示にする属性
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * キャストする属性
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
     /**
      * テーブル名
@@ -38,7 +61,7 @@ class User extends Model
     protected $table = 'users';
 
     /**
-     * タイムスタンプを記録しないカラム
+     * ソフトデリートの対象とするカラム
      *
      * @var array
      */
@@ -47,19 +70,9 @@ class User extends Model
     /**
      * フィルアブル属性
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = ['name', 'email', 'password', 'status_id'];
-
-    /**
-     * ユーザートークンのリレーション
-     *
-     * @return HasMany
-     */
-    public function tokens(): HasMany
-    {
-        return $this->hasMany(UserToken::class);
-    }
 
     /**
      * ユーザーステータスのリレーション

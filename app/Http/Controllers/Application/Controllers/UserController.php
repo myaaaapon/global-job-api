@@ -75,23 +75,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse JSONレスポンス
      */
-    public function getUser(): JsonResponse
+    public function getUserWithMatchingItems(): JsonResponse
     {
-        $user = $this->userUseCase->getUser();
-        $status = $this->userUseCase->getStatusByUserId($user->id);
-        $tags = $this->userUseCase->getUserTagsByUserId($user->id);
+        $user = $this->userUseCase->getUserWithMatchingItems();
 
-        return response()->json([
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'status' => [
-                'id' => $status->id,
-                'name' => $status->name,
-            ],
-            'tag' => $tags,
-            'match' => [],  // TODO: マッチングしたJOBを返す
-        ], Response::HTTP_OK);
+        return response()->json($user, Response::HTTP_OK);
     }
 
     /**

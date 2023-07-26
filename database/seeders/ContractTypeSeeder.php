@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\ContractType;
+use App\Domain\Entities\ContractType;
 
 class ContractTypeSeeder extends Seeder
 {

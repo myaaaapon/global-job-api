@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\Category;
+use App\Domain\Entities\Category;
 
 class CategorySeeder extends Seeder
 {
