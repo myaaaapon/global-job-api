@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\User;
-use App\Models\Domain\Entities\UserStatus;
+use App\Domain\Entities\User;
+use App\Domain\Entities\UserStatus;
 use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder

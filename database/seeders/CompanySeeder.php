@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\Company;
-use App\Models\Domain\Entities\Country;
+use App\Domain\Entities\Company;
+use App\Domain\Entities\Country;
 
 class CompanySeeder extends Seeder
 {

@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\Item;
-use App\Models\Domain\Entities\HtmlTag;
-use App\Models\Domain\Entities\Company;
-use App\Models\Domain\Entities\Category;
-use App\Models\Domain\Entities\ContractType;
-use App\Models\Domain\Entities\Remote;
+use App\Domain\Entities\Item;
+use App\Domain\Entities\HtmlTag;
+use App\Domain\Entities\Company;
+use App\Domain\Entities\Category;
+use App\Domain\Entities\ContractType;
+use App\Domain\Entities\Remote;
 use Faker\Factory as Faker;
 
 class ItemSeeder extends Seeder

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\Site;
+use App\Domain\Entities\Site;
 
 class SiteSeeder extends Seeder
 {

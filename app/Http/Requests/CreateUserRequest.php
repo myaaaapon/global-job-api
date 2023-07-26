@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Domain\Entities\UserStatus;
+use App\Domain\Entities\UserStatus;
 use Illuminate\Validation\Rule;
 
 class CreateUserRequest extends FormRequest

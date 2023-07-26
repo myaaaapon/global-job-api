@@ -2,8 +2,7 @@
 
 namespace App\Application\Contracts;
 
-use App\Models\User;
-use App\Models\Domain\Entities\UserStatus;
+use App\Domain\Entities\UserStatus;
 
 interface UserUseCaseInterface
 {
@@ -36,12 +35,12 @@ interface UserUseCaseInterface
     public function createUser(string $name, string $email, string $password, array $tagIds): void;
 
     /**
-     * ユーザー情報を取得します。
+     * ユーザー情報とマッチしたアイテム情報を取得します。
      *
-     * @return User ユーザーのインスタンス
+     * @return array ユーザー情報とマッチしたアイテム情報の連想配列
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException ユーザーが見つからない場合は例外をスローします
      */
-    public function getUser(): User;
+    public function getUserWithMatchingItems(): array;
 
     /**
      * ユーザー情報を更新します。

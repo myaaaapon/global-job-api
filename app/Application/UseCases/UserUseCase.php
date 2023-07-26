@@ -2,17 +2,27 @@
 
 namespace App\Application\UseCases;
 
+use App\Domain\Repositories\UserRepositoryInterface;
 use App\Application\Contracts\UserUseCaseInterface;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Domain\Entities\User as UserEntity;
-use App\Models\User;
-use App\Models\Domain\Entities\UserStatus;
-use App\Models\Domain\Entities\UserTag;
+use App\Domain\Entities\UserStatus;
 
 class UserUseCase implements UserUseCaseInterface
 {
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $userRepository;
+
+    /**
+     * UserUseCase コンストラクタ
+     *
+     * @param UserRepositoryInterface $userRepository ユーザーリポジトリのインスタンス
+     */
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * ユーザーをログインさせる。
      *
@@ -22,14 +32,7 @@ class UserUseCase implements UserUseCaseInterface
      */
     public function login(string $email, string $password): ?string
     {
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            $user = User::where('email', $email)->first();
-            $user->tokens()->delete();
-            $token = $user->createToken("login:user{$user->id}")->plainTextToken;
-            return $token;
-        }
-
-        return null;
+        return $this->userRepository->login($email, $password);
     }
 
     /**
@@ -40,19 +43,7 @@ class UserUseCase implements UserUseCaseInterface
      */
     public function logout(): void
     {
-        $userId = auth()->id();
-
-        try {
-            $user = User::findOrFail($userId);
-        } catch (ModelNotFoundException $e) {
-            throw new \Exception('User not found', 404);
-        }
-
-        $user->tokens->each(function ($token) {
-            $token->delete();
-        });
-
-        Auth::guard('web')->logout();
+        $this->userRepository->logout();
     }
 
     /**
@@ -66,36 +57,18 @@ class UserUseCase implements UserUseCaseInterface
      */
     public function createUser(string $name, string $email, string $password, array $tagIds): void
     {
-        $user = UserEntity::create([
-            'name' => $name,
-            'email' => $email,
-            'status_id' => UserStatus::FREE_USER,
-            'password' => Hash::make($password),
-        ]);
-
-        foreach ($tagIds as $tagId) {
-            $userTag = new UserTag([
-                'user_id' => $user->id,
-                'tag_id' => $tagId,
-            ]);
-            $userTag->save();
-        }
+        $this->userRepository->createUser($name, $email, $password, $tagIds);
     }
 
     /**
-     * ユーザー情報を取得します。
+     * ユーザー情報とマッチしたアイテム情報を取得します。
      *
-     * @return User ユーザーのインスタンス
+     * @return array ユーザー情報とマッチしたアイテム情報の連想配列
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException ユーザーが見つからない場合は例外をスローします
      */
-    public function getUser(): User
+    public function getUserWithMatchingItems(): array
     {
-        $user = auth()->user();
-        if (!$user) {
-            throw new \Exception('User not found', 404);
-        }
-
-        return $user;
+        return $this->userRepository->getUserWithMatchingItems();
     }
 
     /**
@@ -109,24 +82,7 @@ class UserUseCase implements UserUseCaseInterface
      */
     public function updateUser(string $name, string $email, string $password, array $tagIds): void
     {
-        $userId = Auth::id();
-        $user = UserEntity::findOrFail($userId);
-
-        $user->name = $name;
-        $user->email = $email;
-        $user->password = Hash::make($password);
-        $user->save();
-
-        $userTagIds = UserTag::where('user_id', $userId)->pluck('tag_id')->toArray();
-        $tagsToAttach = array_diff($tagIds, $userTagIds);
-        $tagsToDetach = array_diff($userTagIds, $tagIds);
-        foreach ($tagsToAttach as $tagId) {
-            UserTag::create([
-                'user_id' => $userId,
-                'tag_id' => $tagId,
-            ]);
-        }
-        UserTag::where('user_id', $userId)->whereIn('tag_id', $tagsToDetach)->delete();
+        $this->userRepository->updateUser($name, $email, $password, $tagIds);
     }
 
     /**
@@ -137,16 +93,7 @@ class UserUseCase implements UserUseCaseInterface
      */
     public function deleteUser(): void
     {
-        $userId = auth()->id();
-
-        try {
-            $user = UserEntity::findOrFail($userId);
-        } catch (ModelNotFoundException $e) {
-            throw new \Exception('User not found', 404);
-        }
-
-        $user->userTags()->delete();
-        $user->delete();
+        $this->userRepository->deleteUser();
     }
 
     /**
@@ -157,12 +104,7 @@ class UserUseCase implements UserUseCaseInterface
      */
     public function getStatusByUserId(int $userId): ?UserStatus
     {
-        try {
-            $user = UserEntity::findOrFail($userId);
-            return $user->status;
-        } catch (ModelNotFoundException $e) {
-            return null;
-        }
+        return $this->userRepository->getStatusByUserId($userId);
     }
 
     /**
@@ -173,18 +115,6 @@ class UserUseCase implements UserUseCaseInterface
      */
     public function getUserTagsByUserId(int $userId): ?array
     {
-        try {
-            $user = UserEntity::findOrFail($userId);
-            $usertags = $user->usertags->map(function ($usertag) {
-                return [
-                    'id' => $usertag->tag->id,
-                    'name' => $usertag->tag->name,
-                ];
-            })->toArray();
-
-            return $usertags;
-        } catch (ModelNotFoundException $e) {
-            return null;
-        }
+        return $this->userRepository->getUserTagsByUserId($userId);
     }
 }

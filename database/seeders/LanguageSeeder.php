@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Domain\Entities\Language;
+use App\Domain\Entities\Language;
 
 class LanguageSeeder extends Seeder
 {
