@@ -1,0 +1,3 @@
+[submodule "app/Console/Commands"]
+	path = app/Console/Commands
+	url = git@github.com:myaaaapon/global-job-batch.git
